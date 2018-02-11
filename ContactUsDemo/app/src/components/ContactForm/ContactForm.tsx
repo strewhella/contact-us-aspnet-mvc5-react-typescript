@@ -38,6 +38,7 @@ export const ContactForm = (props: ContactFormProps) => {
                         <Input
                             placeholder="eg. john.smith@email.com"
                             model="contactUs.email"
+                            pattern="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
                         >
                             Email
                         </Input>

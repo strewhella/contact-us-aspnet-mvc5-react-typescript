@@ -14,8 +14,18 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps> {
+    private interval: NodeJS.Timer;
+
     componentWillMount(): void {
         this.props.dispatch.getMessages();
+
+        this.interval = setInterval(() => {
+            this.props.dispatch.getMessages();
+        }, 2000);
+    }
+
+    componentWillUnmount(): void {
+        clearInterval(this.interval);
     }
 
     render() {

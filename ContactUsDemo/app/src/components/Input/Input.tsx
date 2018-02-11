@@ -6,6 +6,7 @@ interface InputProps {
     placeholder: string;
     model: string;
     children?: any;
+    pattern?: string;
 }
 
 export const Input = (props: InputProps) => {
@@ -16,6 +17,7 @@ export const Input = (props: InputProps) => {
                 <Control.text
                     model={props.model}
                     component={SemanticInput}
+                    pattern={props.pattern}
                     controlProps={{
                         label: { icon: "asterisk" },
                         labelPosition: "right corner",

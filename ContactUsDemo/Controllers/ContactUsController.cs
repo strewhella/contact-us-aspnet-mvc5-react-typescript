@@ -1,4 +1,5 @@
-﻿using ContactUsDemo.Models;
+﻿using ContactUsDemo.Database;
+using ContactUsDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,28 @@ namespace ContactUsDemo.Controllers
 {
     public class ContactUsController : ApiController
     {
+        public IContactUsRepository Repo { get; set; }
 
-        private static IList<ContactUsForm> messages = new List<ContactUsForm>();
-        private static int currentId = 1;
+        public ContactUsController(IContactUsRepository repo)
+        {
+            Repo = repo;
+        }
 
         [HttpPost]
         public async Task<IHttpActionResult> PostMessage(ContactUsForm form)
         {
-            form.Id = currentId++;
-            messages.Add(form);
-            return Ok();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var savedForm = await Repo.SaveContactUsForm(form);
+
+            return Ok(savedForm);
         }
 
         [HttpGet]
         public async Task<IHttpActionResult> GetMessages()
         {
+            var messages = await Repo.GetContactUsForms();
+
             return Ok(messages);
         }
     }

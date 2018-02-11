@@ -6,8 +6,10 @@ using System.Web;
 
 namespace ContactUsDemo.Models
 {
-    public class ContactUsMessage
+    public class ContactUsForm
     {
+        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 
