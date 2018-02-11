@@ -1,4 +1,5 @@
 import { ContactUsForm } from "../interfaces/ContactUsForm";
+import { actions } from "react-redux-form";
 
 export class ActionCreators {
     postMessage = (form: ContactUsForm) => {
@@ -12,7 +13,7 @@ export class ActionCreators {
 
     getMessages = () => {
         return {
-            type: "postMessage",
+            type: "getMessages",
             method: "GET",
             url: "/api/contactus"
         };
@@ -31,5 +32,9 @@ export class ActionCreators {
             key,
             body
         };
+    };
+
+    reset = () => {
+        return actions.reset("contactUs");
     };
 }

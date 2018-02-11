@@ -1,11 +1,12 @@
 import * as React from "react";
 import "./App.css";
-import { Container, Button, Card, Form } from "semantic-ui-react";
-import { Input } from "../Input/Input";
+import { Container } from "semantic-ui-react";
 import { AppState } from "../../state/AppState";
 import * as Redux from "redux";
 import { connect } from "react-redux";
 import { ActionCreators } from "../../state/ActionCreators";
+import { ContactForm } from "../ContactForm/ContactForm";
+import { MessageFeed } from "../MessageFeed/MessageFeed";
 
 interface AppProps {
     state: AppState;
@@ -13,54 +14,31 @@ interface AppProps {
 }
 
 class App extends React.Component<AppProps> {
-    submit = () => {
-        this.props.dispatch.postMessage({
-            name: "test",
-            email: "test",
-            message: "test"
-        });
-    };
+    componentWillMount(): void {
+        this.props.dispatch.getMessages();
+    }
 
     render() {
         return (
             <Container className="App">
                 <div className="App-contact-form">
-                    <Card>
-                        <Card.Content>
-                            <Card.Header>Contact Us</Card.Header>
-                            <Card.Meta>
-                                Tell us what you really think!
-                            </Card.Meta>
-                            <Card.Description>
-                                <Form>
-                                    <Input placeholder="eg. John Smith">
-                                        Name
-                                    </Input>
-                                    <Input placeholder="eg. john.smith@email.com">
-                                        Email
-                                    </Input>
-                                    <Input placeholder="What are your thoughts?">
-                                        Message
-                                    </Input>
-                                    <div className="App-submit">
-                                        <Button
-                                            type="submit"
-                                            onClick={this.submit}
-                                        >
-                                            Submit
-                                        </Button>
-                                    </div>
-                                </Form>
-                            </Card.Description>
-                        </Card.Content>
-                    </Card>
+                    <ContactForm
+                        dispatch={this.props.dispatch}
+                        state={this.props.state}
+                    />
+
+                    {this.props.state.getMessages.body && (
+                        <MessageFeed
+                            messages={this.props.state.getMessages.body}
+                        />
+                    )}
                 </div>
             </Container>
         );
     }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: { app: AppState }) => {
     return {
         state: state.app
     };
@@ -68,7 +46,10 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch<AppState>) => {
     return {
-        dispatch
+        dispatch: Redux.bindActionCreators(
+            new ActionCreators() as any,
+            dispatch
+        )
     };
 };
 

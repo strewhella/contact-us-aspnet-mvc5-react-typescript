@@ -2,8 +2,16 @@ import { AppState } from "./AppState";
 import * as Redux from "redux";
 
 export const initialState: AppState = {
-    getMessages: {},
-    postMessage: {}
+    getMessages: {
+        error: false,
+        loading: false,
+        body: []
+    },
+    postMessage: {
+        error: false,
+        loading: false,
+        body: {}
+    }
 };
 
 export const rootReducer = (state: AppState, action: Redux.AnyAction) => {

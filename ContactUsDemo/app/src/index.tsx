@@ -11,7 +11,7 @@ import { rootReducer } from "./state/rootReducer";
 import { httpMiddleware } from "./state/httpMiddleware";
 
 const store = Redux.createStore(
-    {
+    Redux.combineReducers({
         app: rootReducer,
         ...createForms({
             contactUs: {
@@ -20,7 +20,7 @@ const store = Redux.createStore(
                 message: ""
             }
         })
-    },
+    }),
     Redux.applyMiddleware(httpMiddleware as any)
 );
 

@@ -8,10 +8,12 @@ export const httpMiddleware = (store: Redux.Store<AppState>) => (
     next: Function
 ) => (action: Redux.AnyAction) => {
     if (action.method && action.url) {
-        fetch(action.url, {
+        fetch("http://localhost:49701" + action.url, {
             method: action.method,
             body: JSON.stringify(action.body),
-            headers: { "Content-Type": "application/json" }
+            headers: new Headers({
+                "Content-Type": "application/json"
+            })
         })
             .then((res: Response) => {
                 if (!res.ok) throw new Error();
@@ -30,4 +32,6 @@ export const httpMiddleware = (store: Redux.Store<AppState>) => (
                 store.dispatch(actions.httpError(action.type));
             });
     }
+
+    next(action);
 };
