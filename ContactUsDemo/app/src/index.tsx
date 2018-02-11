@@ -3,18 +3,25 @@ import * as ReactDOM from "react-dom";
 import App from "./components/App/App";
 import "./index.css";
 import "semantic-ui-css/semantic.min.css";
+import "whatwg-fetch";
 import * as Redux from "redux";
-import { combineForms } from "react-redux-form";
+import { createForms } from "react-redux-form";
 import { Provider } from "react-redux";
+import { rootReducer } from "./state/rootReducer";
+import { httpMiddleware } from "./state/httpMiddleware";
 
 const store = Redux.createStore(
-    combineForms({
-        contactUs: {
-            name: "",
-            email: "",
-            message: ""
-        }
-    })
+    {
+        app: rootReducer,
+        ...createForms({
+            contactUs: {
+                name: "",
+                email: "",
+                message: ""
+            }
+        })
+    },
+    Redux.applyMiddleware(httpMiddleware as any)
 );
 
 ReactDOM.render(
