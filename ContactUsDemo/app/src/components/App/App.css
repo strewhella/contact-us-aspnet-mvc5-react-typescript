@@ -1,0 +1,9 @@
+.App .App-contact-form {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.App .App-submit {
+    text-align: center;
+}
