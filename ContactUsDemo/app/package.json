@@ -3,8 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@types/d3-ease": "^1.0.7",
         "@types/react-redux": "^5.0.14",
         "@types/redux-logger": "^3.0.5",
+        "d3-ease": "^1.0.3",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
         "react-move": "^2.6.0",

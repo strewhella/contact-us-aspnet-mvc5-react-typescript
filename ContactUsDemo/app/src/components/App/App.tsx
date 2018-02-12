@@ -1,12 +1,14 @@
 import * as React from "react";
 import "./App.css";
-import { Container } from "semantic-ui-react";
+import { Container, Header } from "semantic-ui-react";
 import { AppState } from "../../state/AppState";
 import * as Redux from "redux";
 import { connect } from "react-redux";
 import { ActionCreators } from "../../state/ActionCreators";
 import { ContactForm } from "../ContactForm/ContactForm";
 import { MessageFeed } from "../MessageFeed/MessageFeed";
+import { Animate } from "react-move";
+import { SideAnimation } from "./App.anim";
 
 interface AppProps {
     state: AppState;
@@ -37,11 +39,37 @@ class App extends React.Component<AppProps> {
                         state={this.props.state}
                     />
 
-                    {this.props.state.getMessages.body && (
-                        <MessageFeed
-                            messages={this.props.state.getMessages.body}
-                        />
-                    )}
+                    {((!this.props.state.getMessages.body ||
+                        this.props.state.getMessages.body.length === 0) && (
+                        <Animate {...SideAnimation}>
+                            {data => (
+                                <Header
+                                    as="h2"
+                                    style={{
+                                        transform: `translateX(${data.x}px`,
+                                        opacity: data.opacity as number
+                                    }}
+                                >
+                                    There hasn't been any feedback yet
+                                </Header>
+                            )}
+                        </Animate>
+                    )) ||
+                        (this.props.state.getMessages.body && (
+                            <Animate {...SideAnimation}>
+                                {data => (
+                                    <MessageFeed
+                                        style={{
+                                            transform: `translateX(${data.x}px`,
+                                            opacity: data.opacity as number
+                                        }}
+                                        messages={
+                                            this.props.state.getMessages.body
+                                        }
+                                    />
+                                )}
+                            </Animate>
+                        ))}
                 </div>
             </Container>
         );
