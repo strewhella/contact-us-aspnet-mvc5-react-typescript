@@ -8,30 +8,31 @@ using System.Web;
 
 namespace ContactUsDemo.Database
 {
-    public interface IContactUsRepository
+    public interface IRepository<T> where T : class
     {
-        Task<ContactUsForm> SaveContactUsForm(ContactUsForm form);
-        Task<IList<ContactUsForm>> GetContactUsForms();
+        Task<T> Add(T entity);
+        Task<IList<T>> GetAll();
     }
 
-    public class ContactUsRepository : IContactUsRepository
+    public class Repository<T> : IRepository<T> where T : class
     {
-        public async Task<ContactUsForm> SaveContactUsForm(ContactUsForm form)
+        private ContactUsDbContext Db { get; set; }
+
+        public Repository(ContactUsDbContext db)
         {
-            using (var db = new ContactUsDbContext())
-            {
-                var savedForm = db.ContactUsForms.Add(form);
-                await db.SaveChangesAsync();
-                return savedForm;
-            }
+            Db = db;
         }
 
-        public async Task<IList<ContactUsForm>> GetContactUsForms()
+        public async Task<T> Add(T entity)
         {
-            using (var db = new ContactUsDbContext())
-            {
-                return await db.ContactUsForms.ToListAsync();
-            }
+            var savedEntity = Db.Set<T>().Add(entity);
+            await Db.SaveChangesAsync();
+            return savedEntity;
+        }
+
+        public async Task<IList<T>> GetAll()
+        {
+            return await Db.Set<T>().ToListAsync();
         }
     }
 }

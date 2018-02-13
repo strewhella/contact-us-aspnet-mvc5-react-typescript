@@ -1,4 +1,5 @@
-﻿using ContactUsDemo.Database;
+﻿using ContactUsDemo.Attributes;
+using ContactUsDemo.Database;
 using ContactUsDemo.Models;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,18 @@ namespace ContactUsDemo.Controllers
 {
     public class ContactUsController : ApiController
     {
-        public IContactUsRepository Repo { get; set; }
+        public IRepository<ContactUsForm> Repo { get; set; }
 
-        public ContactUsController(IContactUsRepository repo)
+        public ContactUsController(IRepository<ContactUsForm> repo)
         {
             Repo = repo;
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IHttpActionResult> PostMessage(ContactUsForm form)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var savedForm = await Repo.SaveContactUsForm(form);
+            var savedForm = await Repo.Add(form);
 
             return Ok(savedForm);
         }
@@ -31,7 +31,7 @@ namespace ContactUsDemo.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetMessages()
         {
-            var messages = await Repo.GetContactUsForms();
+            var messages = await Repo.GetAll();
 
             return Ok(messages);
         }
