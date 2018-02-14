@@ -9,6 +9,7 @@ import { ContactForm } from "../ContactForm/ContactForm";
 import { MessageFeed } from "../MessageFeed/MessageFeed";
 import { Animate } from "react-move";
 import { SideAnimation } from "./App.anim";
+import { AnalogClock } from "../AnalogClock/AnalogClock";
 
 interface AppProps {
     state: AppState;
@@ -23,7 +24,7 @@ class App extends React.Component<AppProps> {
 
         this.interval = setInterval(() => {
             this.props.dispatch.getMessages();
-        }, 2000);
+        }, 2000000);
     }
 
     componentWillUnmount(): void {
@@ -38,7 +39,7 @@ class App extends React.Component<AppProps> {
                         dispatch={this.props.dispatch}
                         state={this.props.state}
                     />
-
+                    <AnalogClock />
                     {((!this.props.state.getMessages.body ||
                         this.props.state.getMessages.body.length === 0) && (
                         <Animate {...SideAnimation}>

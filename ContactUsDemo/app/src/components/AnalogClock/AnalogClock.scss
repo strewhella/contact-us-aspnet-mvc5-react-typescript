@@ -1,0 +1,48 @@
+.analog-clock {
+    background-color: black;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    transform: rotate(-90deg);
+    box-shadow: -4px 4px 5px 0px rgba(0, 0, 0, 0.25);
+
+    .hour {
+        width: 5px;
+        height: 2px;
+        background-color: white;
+        transform-origin: left center;
+        position: absolute;
+        top: 48px;
+        left: 50px;
+
+        @for $i from 1 through 12 {
+            &.hour-#{$i} {
+                transform: rotate(30 * $i + deg) translate3d(40px, 0, 0);
+            }
+        }
+    }
+
+    .hand {
+        width: 45px;
+        height: 4px;
+        background-color: white;
+        transform-origin: left center;
+        position: absolute;
+        top: 48px;
+        left: 50px;
+        border-radius: 2px;
+
+        &.hour-hand {
+            width: 20px;
+        }
+
+        &.minute-hand {
+            width: 40px;
+        }
+
+        &.second-hand {
+            height: 2px;
+        }
+    }
+}

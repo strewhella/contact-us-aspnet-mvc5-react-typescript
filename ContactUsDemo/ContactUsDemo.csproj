@@ -147,7 +147,7 @@
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Database\ContactUsDbContext.cs" />
-    <Compile Include="Database\ContactUsRepository.cs" />
+    <Compile Include="Database\Repository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
