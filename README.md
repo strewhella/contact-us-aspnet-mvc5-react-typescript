@@ -5,8 +5,11 @@ The database will be automatically created by Entity Framework using a default S
 There are pre and post build events configured to npm install and build the frontend React app, so just running the app from Visual Studio will setup everything necessary, though it may take a few minutes. Note that this requires NPM 5+ to be available on the command line
 
 If you need or want to do this manually, navigate to the app folder and run:
+
 npm i
+
 npm run build
+
 Then run the app in Visual Studio
 
 Enjoy!
