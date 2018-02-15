@@ -8,7 +8,7 @@ export const httpMiddleware = (store: Redux.Store<AppState>) => (
     next: Function
 ) => (action: Redux.AnyAction) => {
     if (action.method && action.url) {
-        fetch("http://localhost:49701" + action.url, {
+        fetch(action.url, {
             method: action.method,
             body: JSON.stringify(action.body),
             headers: new Headers({

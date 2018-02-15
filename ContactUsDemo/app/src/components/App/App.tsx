@@ -24,7 +24,7 @@ class App extends React.Component<AppProps> {
 
         this.interval = setInterval(() => {
             this.props.dispatch.getMessages();
-        }, 2000000);
+        }, 1000);
     }
 
     componentWillUnmount(): void {

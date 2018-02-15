@@ -164,6 +164,7 @@
     <Content Include="app\tsconfig.test.json" />
     <Content Include="app\tslint.json" />
     <None Include="packages.config" />
+    <Content Include="README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -172,12 +173,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\src\state\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\src\components\App\App.tsx" />
     <TypeScriptCompile Include="app\src\index.tsx" />
+    <TypeScriptCompile Include="app\src\interfaces\ContactUsForm.ts" />
+    <TypeScriptCompile Include="app\src\interfaces\HttpRequest.ts" />
+    <TypeScriptCompile Include="app\src\interfaces\HttpResponse.ts" />
+    <TypeScriptCompile Include="app\src\state\ActionCreators.ts" />
+    <TypeScriptCompile Include="app\src\state\AppState.ts" />
+    <TypeScriptCompile Include="app\src\state\httpMiddleware.ts" />
+    <TypeScriptCompile Include="app\src\state\rootReducer.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -216,8 +223,12 @@
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>cd ../app
+npm i</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>cd ../app
+npm run build</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
